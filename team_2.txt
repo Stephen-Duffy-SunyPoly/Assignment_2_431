@@ -1,20 +1,54 @@
 (* Problem 1 Solution *)
 
 (* Problem 2 Solution *)
+(* Author: Edward Campion III *)
+
+(* non-tail-recursive *)
+let rec makeList n =
+  match n with
+  | n when n < 0 -> failwith "Negative input is not allowed"
+  | 0 -> []
+  | _ -> makeList (n - 1) @ [n]
+
+(* tail-recursive *)
+let makeList n =
+  let rec aux n acc =
+    match n with
+    | n when n < 0 -> failwith "Negative input is not allowed"
+    | 0 -> acc
+    | _ -> aux (n - 1) (n :: acc)
+  in
+  aux n []
 
 (* Problem 3 Solution *)
 
 (* Problem 4 Solution *)
 
 (* Problem 5 Solution *)
+(* Author: Edward Campion III *)
+
+let rec in_order tree =
+  match tree with
+  | Empty -> []
+  | Leaf v -> [v]
+  | Node (v, left, right) -> (in_order left) @ [v] @ (in_order right)
 
 (* Problem 6 Solution *)
 
 Problem 7 Solution
 
 Problem 8 Solution
+Author: Edward Campion III
+  (λz. z z z) (λy. y y)
+= (λy. y y) (λy. y y)
+= (λy. y y) (λy. y y)
+No normal form exists for this function.
 
 Problem 9 Solution
+Author: Edward Campion III
+  (λx. x x) (λx. y)
+= (λx. y)(λx. y)
+= y
 
 Problem 10 Solution
 
@@ -29,3 +63,16 @@ Problem 10 Solution
 {- Problem 15 Solution -}
 
 {- Problem 16 Solution -}
+{- Author: Edward Campion III -}
+
+{- Find divisors -}
+divisors :: Int -> [Int]
+divisors n = [x | x <- [1..n-1], n `mod` x == 0]
+
+{- Check if perfect -}
+isPerfect :: Int -> Bool
+isPerfect n = sum (divisors n) == n
+
+{- Find perfect -}
+perfs :: Int -> [Int]
+perfs limit = [n | n <- [1..limit], isPerfect n]
